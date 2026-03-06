@@ -3,91 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>VESISI — Free Web Templates</title>
 
 <style>
 
-*{
-box-sizing:border-box;
-margin:0;
-padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0;}
 
 body{
 font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-background:linear-gradient(135deg,#0f172a,#020617);
+background:#020617;
 color:white;
 min-height:100vh;
 }
 
-header{
-padding:40px 20px;
-text-align:center;
+/* 배경 효과 */
+body:before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 20% 20%,#3b82f655,transparent 40%),
+radial-gradient(circle at 80% 30%,#9333ea55,transparent 40%),
+radial-gradient(circle at 50% 80%,#06b6d455,transparent 40%);
+z-index:-1;
 }
 
-h1{
-font-size:56px;
-letter-spacing:6px;
+/* 헤더 */
+
+header{
+text-align:center;
+padding:90px 20px 60px;
+}
+
+.logo{
+font-size:64px;
 font-weight:800;
+letter-spacing:10px;
+background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
 }
 
 .subtitle{
-margin-top:10px;
-opacity:.7;
+margin-top:16px;
 font-size:18px;
+opacity:.7;
 }
 
 .support{
 margin-top:30px;
 display:inline-block;
-padding:14px 28px;
-background:#2563eb;
+padding:16px 30px;
 border-radius:8px;
+background:#2563eb;
 text-decoration:none;
 color:white;
 font-weight:600;
+box-shadow:0 8px 30px rgba(37,99,235,.4);
 }
 
 .support:hover{
 background:#1d4ed8;
 }
 
+/* 섹션 */
+
 .section{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
-padding:60px 20px;
+padding:40px 20px 80px;
 }
 
-.templates{
+.section h2{
+text-align:center;
+margin-bottom:40px;
+font-size:32px;
+letter-spacing:2px;
+}
+
+/* 카드 */
+
+.grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:28px;
-margin-top:30px;
+gap:30px;
 }
 
 .card{
 background:#0f172a;
-border-radius:10px;
-padding:24px;
-border:1px solid rgba(255,255,255,.08);
-transition:.2s;
+border-radius:14px;
+padding:26px;
+border:1px solid rgba(255,255,255,.06);
+transition:.25s;
+position:relative;
+overflow:hidden;
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-8px);
 border-color:#3b82f6;
 }
 
+.card:before{
+content:"";
+position:absolute;
+top:-40%;
+left:-40%;
+width:200%;
+height:200%;
+background:radial-gradient(circle,#3b82f633,transparent 60%);
+opacity:0;
+transition:.4s;
+}
+
+.card:hover:before{
+opacity:1;
+}
+
 .card h3{
-margin-bottom:10px;
 font-size:20px;
+margin-bottom:10px;
 }
 
 .card p{
-opacity:.7;
+opacity:.65;
 font-size:14px;
-margin-bottom:18px;
+margin-bottom:20px;
 }
 
 .download{
@@ -95,8 +137,8 @@ display:inline-block;
 padding:10px 16px;
 background:#111827;
 border-radius:6px;
-color:white;
 text-decoration:none;
+color:white;
 font-size:14px;
 }
 
@@ -104,11 +146,14 @@ font-size:14px;
 background:#1f2937;
 }
 
+/* footer */
+
 footer{
 text-align:center;
 padding:40px;
 opacity:.5;
 font-size:14px;
+border-top:1px solid rgba(255,255,255,.05);
 }
 
 </style>
@@ -118,10 +163,10 @@ font-size:14px;
 
 <header>
 
-<h1>VESISI</h1>
+<div class="logo">VESISI</div>
 
 <div class="subtitle">
-Free Web Templates
+Free Web Templates for Developers
 </div>
 
 <a class="support" href="https://paypal.me/vesisi" target="_blank">
@@ -132,29 +177,31 @@ Support this project
 
 <section class="section">
 
-<div class="templates">
+<h2>Templates</h2>
+
+<div class="grid">
 
 <div class="card">
 <h3>Landing Template</h3>
-<p>Simple modern landing page layout.</p>
+<p>Modern landing page layout with hero section.</p>
 <a class="download" href="#">Download</a>
 </div>
 
 <div class="card">
-<h3>Portfolio Template</h3>
-<p>Clean developer portfolio template.</p>
+<h3>Developer Portfolio</h3>
+<p>Minimal portfolio template for developers.</p>
 <a class="download" href="#">Download</a>
 </div>
 
 <div class="card">
-<h3>Startup Template</h3>
-<p>Startup homepage layout design.</p>
+<h3>Startup Page</h3>
+<p>Simple startup homepage template.</p>
 <a class="download" href="#">Download</a>
 </div>
 
 <div class="card">
-<h3>Dashboard Template</h3>
-<p>Minimal dashboard UI layout.</p>
+<h3>Dashboard UI</h3>
+<p>Clean dashboard layout template.</p>
 <a class="download" href="#">Download</a>
 </div>
 
