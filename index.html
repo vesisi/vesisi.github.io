@@ -1,248 +1,543 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VESISI — Free Web Templates</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VESISI — 웹프로그램 유지보수 · 디버깅</title>
 
-<style>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-*{box-sizing:border-box;margin:0;padding:0;}
+    html {
+      scroll-behavior: smooth;
+    }
 
-body{
-font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial;
-background:#020617;
-color:white;
-min-height:100vh;
-}
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background: #020617;
+      color: white;
+      min-height: 100vh;
+      line-height: 1.6;
+    }
 
-/* 배경 효과 */
-body:before{
-content:"";
-position:fixed;
-width:100%;
-height:100%;
-background:
-radial-gradient(circle at 20% 20%,#3b82f655,transparent 40%),
-radial-gradient(circle at 80% 30%,#9333ea55,transparent 40%),
-radial-gradient(circle at 50% 80%,#06b6d455,transparent 40%);
-z-index:-1;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 20%, #3b82f655, transparent 40%),
+        radial-gradient(circle at 80% 30%, #9333ea55, transparent 40%),
+        radial-gradient(circle at 50% 80%, #06b6d455, transparent 40%);
+      z-index: -1;
+    }
 
-/* 헤더 */
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-header{
-text-align:center;
-padding:90px 20px 60px;
-}
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
 
-.logo{
-font-size:64px;
-font-weight:800;
-letter-spacing:10px;
-background:linear-gradient(90deg,#60a5fa,#a78bfa,#22d3ee);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
+    header {
+      padding: 90px 20px 70px;
+      text-align: center;
+    }
 
-.subtitle{
-margin-top:16px;
-font-size:18px;
-opacity:.7;
-}
+    .logo {
+      font-size: 64px;
+      font-weight: 800;
+      letter-spacing: 10px;
+      background: linear-gradient(90deg, #60a5fa, #a78bfa, #22d3ee);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 20px;
+    }
 
-.support{
-margin-top:30px;
-display:inline-block;
-padding:16px 30px;
-border-radius:8px;
-background:#2563eb;
-text-decoration:none;
-color:white;
-font-weight:600;
-box-shadow:0 8px 30px rgba(37,99,235,.4);
-}
+    .hero-title {
+      font-size: 42px;
+      font-weight: 800;
+      line-height: 1.25;
+      max-width: 900px;
+      margin: 0 auto;
+    }
 
-.support:hover{
-background:#1d4ed8;
-}
+    .hero-desc {
+      margin: 22px auto 0;
+      max-width: 760px;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.74);
+    }
 
-/* 섹션 */
+    .hero-badges {
+      margin-top: 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
 
-.section{
-max-width:1200px;
-margin:auto;
-padding:40px 20px 80px;
-}
+    .badge {
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.9);
+    }
 
-.section h2{
-text-align:center;
-margin-bottom:40px;
-font-size:32px;
-letter-spacing:2px;
-}
+    .hero-actions {
+      margin-top: 34px;
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
 
-/* 카드 */
+    .btn {
+      display: inline-block;
+      padding: 15px 24px;
+      border-radius: 10px;
+      font-weight: 700;
+      transition: 0.25s;
+    }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:30px;
-}
+    .btn-primary {
+      background: #2563eb;
+      color: white;
+      box-shadow: 0 8px 30px rgba(37, 99, 235, 0.35);
+    }
 
-.card{
-background:#0f172a;
-border-radius:14px;
-padding:26px;
-border:1px solid rgba(255,255,255,.06);
-transition:.25s;
-position:relative;
-overflow:hidden;
-}
+    .btn-primary:hover {
+      background: #1d4ed8;
+      transform: translateY(-2px);
+    }
 
-.card:hover{
-transform:translateY(-8px);
-border-color:#3b82f6;
-}
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: white;
+    }
 
-.card:before{
-content:"";
-position:absolute;
-top:-40%;
-left:-40%;
-width:200%;
-height:200%;
-background:radial-gradient(circle,#3b82f633,transparent 60%);
-opacity:0;
-transition:.4s;
-}
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+    }
 
-.card:hover:before{
-opacity:1;
-}
+    section {
+      padding: 35px 0 85px;
+    }
 
-.card h3{
-font-size:20px;
-margin-bottom:10px;
-}
+    .section-title {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      margin-bottom: 14px;
+      letter-spacing: 1px;
+    }
 
-.card p{
-opacity:.65;
-font-size:14px;
-margin-bottom:20px;
-}
+    .section-desc {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 40px;
+      color: rgba(255, 255, 255, 0.68);
+      font-size: 16px;
+    }
 
-.download{
-display:inline-block;
-padding:10px 16px;
-background:#111827;
-border-radius:6px;
-text-decoration:none;
-color:white;
-font-size:14px;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 26px;
+    }
 
-.download:hover{
-background:#1f2937;
-}
+    .card {
+      background: rgba(15, 23, 42, 0.92);
+      border-radius: 16px;
+      padding: 28px 24px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      position: relative;
+      overflow: hidden;
+      transition: 0.25s;
+    }
 
-.download {
-  display: inline-block;
-  position: relative;
-  z-index: 10;
-  pointer-events: auto;
-  cursor: pointer;
-}
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: #3b82f6;
+    }
 
-  
-/* footer */
+    .card::before {
+      content: "";
+      position: absolute;
+      top: -45%;
+      left: -45%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, #3b82f633, transparent 60%);
+      opacity: 0;
+      transition: 0.4s;
+      pointer-events: none;
+    }
 
-footer{
-text-align:center;
-padding:40px;
-opacity:.5;
-font-size:14px;
-border-top:1px solid rgba(255,255,255,.05);
-}
+    .card:hover::before {
+      opacity: 1;
+    }
 
-</style>
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card p {
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.68);
+      position: relative;
+      z-index: 1;
+    }
+
+    .about-box {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    .about-box p {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.78);
+    }
+
+    .contact-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 26px;
+      align-items: start;
+    }
+
+    .contact-card,
+    .form-card {
+      background: rgba(15, 23, 42, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 18px;
+      padding: 28px;
+    }
+
+    .contact-card h3,
+    .form-card h3 {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    .contact-card p,
+    .form-note {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 15px;
+    }
+
+    .contact-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-item {
+      padding: 14px 16px;
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      word-break: break-all;
+    }
+
+    .contact-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 14px;
+      color: #93c5fd;
+    }
+
+    form {
+      margin-top: 18px;
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: rgba(255, 255, 255, 0.88);
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      background: #0b1220;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px 14px;
+      font-size: 15px;
+      outline: none;
+      transition: 0.2s;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .submit-btn {
+      border: 0;
+      cursor: pointer;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 20px;
+      opacity: 0.55;
+      font-size: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    @media (max-width: 900px) {
+      .contact-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .logo {
+        font-size: 48px;
+        letter-spacing: 6px;
+      }
+
+      .hero-title {
+        font-size: 32px;
+      }
+
+      .hero-desc {
+        font-size: 16px;
+      }
+
+      header {
+        padding: 72px 20px 56px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .hero-title {
+        font-size: 27px;
+      }
+
+      .section-title {
+        font-size: 28px;
+      }
+
+      .btn {
+        width: 100%;
+        text-align: center;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
+  <header>
+    <div class="container">
+      <div class="logo">VESISI</div>
 
-<div class="logo">VESISI</div>
+      <h1 class="hero-title">
+        웹프로그램 유지보수 · 디버깅 · 관리자 페이지 수정
+      </h1>
 
-<div class="subtitle">
-Free Web Templates for Developers
-</div>
+      <p class="hero-desc">
+        20년 경력의 웹프로그램 경험을 바탕으로, 기존 서비스의 버그 수정,
+        레거시 시스템 유지보수, 관리자 페이지 기능 개선, 운영 중 발생하는
+        문제 해결을 도와드립니다.
+      </p>
 
-<a class="support" href="https://paypal.me/vesisi" target="_blank">
-Support this project
-</a>
+      <div class="hero-badges">
+        <div class="badge">레거시 유지보수</div>
+        <div class="badge">버그 원인 분석</div>
+        <div class="badge">관리자 페이지 수정</div>
+        <div class="badge">기존 서비스 개선</div>
+      </div>
 
-</header>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">문의 보내기</a>
+        <a class="btn btn-secondary" href="mailto:in20000@naver.com">이메일 바로 보내기</a>
+      </div>
+    </div>
+  </header>
 
-<section class="section">
+  <section>
+    <div class="container">
+      <h2 class="section-title">가능한 작업</h2>
+      <p class="section-desc">
+        새로 만드는 일보다, 이미 운영 중인 시스템의 문제를 빠르게 파악하고
+        안정적으로 수정하는 작업에 강합니다.
+      </p>
 
-<h2>Templates</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>버그 수정</h3>
+          <p>로그인 문제, 저장 오류, 리스트 출력 이상, 화면 깨짐, 비정상 동작 등 운영 중인 오류를 분석하고 수정합니다.</p>
+        </div>
 
-<div class="grid">
+        <div class="card">
+          <h3>레거시 시스템 유지보수</h3>
+          <p>기존에 만들어진 웹서비스의 구조를 파악하고, 필요한 기능 수정과 안정화 작업을 진행합니다.</p>
+        </div>
 
-<div class="card">
-<h3>Landing Template</h3>
-<p>Modern landing page layout with hero section.</p>
-<a class="download" href="templates/landing/">Download</a>
-</div>
+        <div class="card">
+          <h3>관리자 페이지 개선</h3>
+          <p>CRUD 화면 수정, 검색/페이징, 상세/등록/수정 화면 정리, 운영 편의 기능 추가를 도와드립니다.</p>
+        </div>
 
-<div class="card">
-<h3>Developer Portfolio</h3>
-<p>Minimal portfolio template for developers.</p>
-<a class="download" href="templates/portfolio/">Download</a>
-</div>
+        <div class="card">
+          <h3>운영 이슈 대응</h3>
+          <p>급하게 발생한 장애나 원인 불명 문제를 추적하고, 가능한 범위에서 빠르게 복구 방향을 잡습니다.</p>
+        </div>
 
-<div class="card">
-<h3>Dashboard UI</h3>
-<p>Clean dashboard layout template.</p>
-<a class="download" href="templates/dashboard/">Download</a>
-</div>
+        <div class="card">
+          <h3>기능 추가 및 수정</h3>
+          <p>기존 서비스에 필요한 소규모 기능 추가, 흐름 개선, 반복 업무를 줄이는 기능 보완 작업이 가능합니다.</p>
+        </div>
 
-<div class="card">
-<h3>Shoping UI</h3>
-<p>Modern shopping interface layout template.</p>
-<a class="download" href="templates/shop/">Download</a>
-</div> 
+        <div class="card">
+          <h3>프로젝트 인수 분석</h3>
+          <p>남이 만든 프로젝트의 구조를 파악하고, 어디를 손봐야 하는지 정리하여 유지보수 방향을 잡아드립니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<div class="card">
-<h3>Admin UI</h3>
-<p>Admin layout template.</p>
-<a class="download" href="templates/admin/">Download</a>
-</div> 
+  <section>
+    <div class="container">
+      <h2 class="section-title">소개</h2>
+      <div class="about-box">
+        <p>
+          VESISI는 운영 중인 웹서비스를 안정적으로 관리하고, 실제로 불편한 지점을
+          고치는 데 집중합니다. 화려한 소개보다 문제를 정확히 보고 해결하는 것을
+          우선합니다. 기존 코드가 복잡하거나 오래되었더라도, 현재 상황을 기준으로
+          필요한 수정 방향을 빠르게 잡는 방식으로 작업합니다.
+        </p>
+      </div>
+    </div>
+  </section>
 
-<div class="card">
-<h3>Blog UI</h3>
-<p>Simple blog layout template.</p>
-<a class="download" href="templates/blog/">Download</a>
-</div> 
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">문의</h2>
+      <p class="section-desc">
+        작업 내용, 현재 문제 상황, 원하는 수정 방향을 적어 보내주시면 확인 후 답변드립니다.
+      </p>
 
-<div class="card">
-<h3>Startup Page</h3>
-<p>Simple startup homepage template.</p>
-<a class="download" href="#">Download</a>
-</div>
-  
+      <div class="contact-wrap">
+        <div class="contact-card">
+          <h3>연락 방법</h3>
+          <p>
+            아래 폼을 작성하시면 메일 앱이 열리면서 문의 내용이 자동으로 채워집니다.
+            메일 앱 사용이 불편하시면 아래 주소로 직접 보내셔도 됩니다.
+          </p>
 
-  
-</div>
+          <div class="contact-list">
+            <div class="contact-item">
+              <strong>이메일</strong>
+              <a href="mailto:in20000@naver.com">in20000@naver.com</a>
+            </div>
 
-</section>
+            <div class="contact-item">
+              <strong>문의 예시</strong>
+              관리자 페이지 수정 / 레거시 유지보수 / 오류 원인 분석 / 기능 추가 / 긴급 장애 대응
+            </div>
+          </div>
+        </div>
 
-<footer>
+        <div class="form-card">
+          <h3>문의 보내기</h3>
+          <p class="form-note">
+            이름, 연락 가능한 이메일, 문의 제목, 상세 내용을 적어 보내주시면 됩니다.
+          </p>
 
-VESISI © 2026
+          <form id="contactForm">
+            <div>
+              <label for="name">이름</label>
+              <input type="text" id="name" name="name" placeholder="성함 또는 회사명을 입력해 주세요" />
+            </div>
 
-</footer>
+            <div>
+              <label for="email">답변 받을 이메일</label>
+              <input type="email" id="email" name="email" placeholder="회신 받을 이메일 주소를 입력해 주세요" />
+            </div>
+
+            <div>
+              <label for="subject">문의 제목</label>
+              <input type="text" id="subject" name="subject" placeholder="예: 관리자 페이지 검색 오류 수정 문의" />
+            </div>
+
+            <div>
+              <label for="message">상세 내용</label>
+              <textarea id="message" name="message" placeholder="현재 어떤 문제가 있는지, 무엇을 원하시는지 자세히 적어 주세요"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary submit-btn">메일 작성 열기</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    VESISI © 2026
+  </footer>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const subject = document.getElementById("subject").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const finalSubject = subject || "VESISI 문의";
+      const body = [
+        "이름: " + (name || ""),
+        "답변 받을 이메일: " + (email || ""),
+        "",
+        "문의 내용:",
+        message || ""
+      ].join("\n");
+
+      const mailtoLink =
+        "mailto:in20000@naver.com" +
+        "?subject=" + encodeURIComponent(finalSubject) +
+        "&body=" + encodeURIComponent(body);
+
+      window.location.href = mailtoLink;
+    });
+  </script>
 
 </body>
 </html>
